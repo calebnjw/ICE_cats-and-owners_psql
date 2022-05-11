@@ -6,7 +6,6 @@
 // ALTER TABLE [table] Change [column] [newName] [type];
 
 // import postgres
-import e from 'express';
 import pg from 'pg';
 
 const { Pool } = pg; // get postgres pool
