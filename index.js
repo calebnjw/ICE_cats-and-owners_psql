@@ -6,6 +6,7 @@
 // ALTER TABLE [table] Change [column] [newName] [type];
 
 // import postgres
+import e from 'express';
 import pg from 'pg';
 
 const { Pool } = pg; // get postgres pool
@@ -146,14 +147,29 @@ if (action === 'owners') {
 
     // get the list of owners from the object
     const owners = Object.keys(catsByOwner);
+    const catCount = process.argv[3];
 
-    // iterate through each owner
-    owners.forEach((owner) => {
-      console.log(`- ${owner}`);
-      // iterate through each array to get cat
-      catsByOwner[owner].forEach((cat) => {
-        console.log(`  - ${cat}`);
+    if (process.argv[3]) {
+      console.log(process.argv[3]);
+      owners.forEach((owner) => {
+        if (catsByOwner[owner].length === Number(process.argv[3])) {
+          console.log(`- ${owner}`);
+          catsByOwner[owner].forEach((cat) => {
+            console.log(`  - ${cat}`);
+          });
+        }
+        // else {
+        //   console.log(`Nobody has ${process.argv[3]} cats.`);
+        // }
       });
-    });
+    } else {
+      owners.forEach((owner) => {
+        console.log(`- ${owner}`);
+        // iterate through each array to get cat
+        catsByOwner[owner].forEach((cat) => {
+          console.log(`  - ${cat}`);
+        });
+      });
+    }
   });
 }
